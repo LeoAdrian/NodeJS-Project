@@ -54,7 +54,7 @@ router.post("/signin", function(req, res, next){
         if(err){
             return next(err);
         } if(!user) {
-            req.flash("mensajeErrorLogin", "User or password incorrect.");
+            req.flash("error", "User or password incorrect.");
             return res.redirect("/signin");
         }
         req.logIn(user, function(err){
