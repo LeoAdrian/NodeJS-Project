@@ -1,0 +1,27 @@
+.caption-full {
+    padding:12px;
+}
+
+.thumbnail{
+    padding:0;
+}
+
+.thumbnail img {
+    width: 100%;
+    max-height: 118px;
+}
+
+.delete-form {
+    display:inline-block;
+    margin-right:10px;
+}
+
+.alert {
+    position: absolute;
+    top: 2.7%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+
+    transform: translate(-50%, -50%); /* This is a shorthand of
+                                         translateX(-50%) and translateY(-50%) */
+                                         z-index:1;
+}
