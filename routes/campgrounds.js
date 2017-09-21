@@ -2,6 +2,7 @@ var express = require("express");
 var router  = express.Router();
 var Campground = require("../models/campground");
 var middleware = require("../middleware");
+var geocoder   = require("geocoder")
 
 //INDEX - show all campgrounds
 router.get("/", function(req, res){
@@ -26,6 +27,13 @@ router.post("/",middleware.isLoggedIn, function(req, res){
     	id: req.user._id,
     	username: req.user.username
     }
+    geocoder.geocode(req.body.location, function (err, data) {
+        if(err){
+            console.log(err);
+        } else {
+        var lat      = data.results[0].geometry.location.lat;
+        var lng      = data.results[0].geometry.location.lng;
+        var location = data.results[0].formatted_address;
     var newCampground = {name: name, image: image, description: desc, author:author, price:price}
     // Create a new campground and save to DB
     Campground.create(newCampground, function(err, newlyCreated){
@@ -36,6 +44,9 @@ router.post("/",middleware.isLoggedIn, function(req, res){
             console.log(newlyCreated);
             res.redirect("/campgrounds");
         }
+    
+      });
+        };
     });
 });
 
@@ -70,17 +81,22 @@ router.get("/:id/edit",middleware.checkCampgroundOwnership, function(req, res) {
 router.put("/:id",middleware.checkCampgroundOwnership,function(req,res){
     // find and update the correct campground
     // redirect somewhere
+    geocoder.geocode(req.body.location, function (err, data) {
+    var lat = data.results[0].geometry.location.lat;
+    var lng = data.results[0].geometry.location.lng;
+    var location = data.results[0].formatted_address;
     Campground.findByIdAndUpdate(req.params.id,req.body.campground,function(err,updatedCampground){
     	console.log(req.body.campground)
     	if (err){
-    		res.redirect("/campgrounds")
+    		res.redirect("/campgrounds",{error:err.message});
     	}
     	else {
     	    req.flash("success","Campground has been updated");
     		res.redirect("/campgrounds/"+req.params.id);
     	}
-    })
-})
+    });
+    });
+});
 
 // DESTROY ROUTE
 
