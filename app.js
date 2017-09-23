@@ -10,6 +10,7 @@ var express          = require("express"),
     seedDB           = require("./seeds"),
     Comment          = require("./models/comment"),
     User             = require("./models/user");
+
  
 // Requiring routes
 var commentRoutes    = require("./routes/comments"),
@@ -30,12 +31,13 @@ app.use(methodOverride("_method"));
 app.use(flash());
 seedDB();
 
+// Moment npm
+app.locals.moment= require("moment");
 //PASSPORT CONFIGURATION
 app.use(require("express-session")({
     secret: "Dio is goddo",
     resave: false,
     saveUninitialized: false
-    
 }))
 
 app.use(passport.initialize());
