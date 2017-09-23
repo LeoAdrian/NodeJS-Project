@@ -75,6 +75,10 @@ router.get("/:id/edit",middleware.checkCampgroundOwnership, function(req, res) {
 
 router.put("/:id", function(req, res){
   geocoder.geocode(req.body.location, function (err, data) {
+      if(err){
+          req.flash("error","You must introduce a location");
+          res.redirect("back")
+      }
     var lat = data.results[0].geometry.location.lat;
     var lng = data.results[0].geometry.location.lng;
     var location = data.results[0].formatted_address;

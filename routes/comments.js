@@ -78,7 +78,7 @@ router.delete("/:comment_id",middleware.checkCommentOwnership,function(req,res){
             res.redirect("back");
         }
         else {
-            req.flash("Comment was deleted")
+            req.flash("success","Comment was deleted")
             res.redirect("/campgrounds/"+req.params.id);
         }
     })

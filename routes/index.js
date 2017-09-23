@@ -19,14 +19,22 @@ router.get("/signup",function(req, res) {
 
 // HANDLE SIGNUP LOGIC
 router.post("/signup",function(req,res){
+    // admin code
     var newUser = new User({username:req.body.username});
+    if(req.body.adminCode === "secretcode123") {
+        newUser.isAdmin = true;
+        req.flash("success","Remember "+req.body.username+ ",with great power comes great responsability");
+    }
+    // eval(require("locus")); - freezes code
     User.register(newUser,req.body.password, function(err, user){
         if(err){
             console.log(err);
             return res.render("signup",{error:err.message});
         }    
         passport.authenticate("local")(req,res,function(){
-            req.flash("success","Welcome to YelpCamp "+user.username)
+            if(newUser.isAdmin === false){
+            req.flash("success","Welcome to YelpCamp, "+user.username); 
+            }
             res.redirect("/campgrounds");
         });
     });
@@ -58,7 +66,11 @@ router.post("/signin", function(req, res, next){
             return res.redirect("/signin");
         }
         req.logIn(user, function(err){
+            if(user.isAdmin === false){
             req.flash('success','Welcome, '+user.username+'.You are now logged in.');
+            } else {
+                req.flash("success", "Welcome back, master "+user.username);
+            }
             res.redirect('/campgrounds');
         });
     })(req,res,next);
@@ -67,7 +79,7 @@ router.post("/signin", function(req, res, next){
 // LOGOUT ROUTE
 router.get("/logout",function(req, res) {
     req.logout();
-    req.flash("success", "Logged you out!");
+    req.flash("success", "See you later!");
     res.redirect("/campgrounds");
 })
 
