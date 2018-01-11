@@ -2,7 +2,8 @@ var express  = require("express");
 var router   = express.Router();
 var passport = require("passport");
 var User     = require("../models/user");
-var middleware = require("../middleware")
+var middleware = require("../middleware");
+var Campground = require("../models/campground")
 router.get("/", function(req,res){
     res.render("landing");
 })
@@ -20,12 +21,19 @@ router.get("/signup",function(req, res) {
 // HANDLE SIGNUP LOGIC
 router.post("/signup",function(req,res){
     // admin code
-    var newUser = new User({username:req.body.username});
+    var newUser = new User({
+        username:req.body.username,
+        firstName:req.body.firstName, 
+        lastName:req.body.lastName, 
+        email:req.body.email,
+        avatar:req.body.avatar
+        
+    });
     if(req.body.adminCode === "secretcode123") {
         newUser.isAdmin = true;
         req.flash("success","Remember "+req.body.username+ ",with great power comes great responsability");
     }
-    // eval(require("locus")); - freezes code
+   // eval(require("locus")); //- freezes code
     User.register(newUser,req.body.password, function(err, user){
         if(err){
             console.log(err);
@@ -83,5 +91,24 @@ router.get("/logout",function(req, res) {
     res.redirect("/campgrounds");
 })
 
+// USER PROFILE ROuTE
+router.get("/users/:id", function(req, res) {
+    User.findById(req.params.id, function(err,foundUser){
+        if(err){
+            req.flash("error","Something went wrong.Please retry");
+            res.redirect("/campgrounds");
+        } else {
+            Campground.find().where("author.id").equals(foundUser.id).exec(function(err,campgrounds){
+                if(err){
+                  req.flash("error","Something went wrong.Please retry");
+            res.redirect("/campgrounds");  
+                } else{
+                    console.log(campgrounds);
+                    res.render("users/show", {user: foundUser, campgrounds:campgrounds});
+            }
+        })
+        }
+    })
+})
 
 module.exports = router;

@@ -1,0 +1,156 @@
+<% include ../partials/header %>
+
+<style>
+    .fa.icons  {
+        width:50px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	color: white;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+        
+    }
+    .fa-facebook.sign {color:#3C599F;}
+    .fa-twitter.sign {color:#32CCFE;}
+    .fa-google-plus.sign {color:#CF3D2E;}
+    
+    /*social icons top right*/
+     .fa-facebook.icons{background-color:#39F;}
+    .fa-twitter.icons {background-color:#32CCFE;}
+    .fa-google-plus.icons {background-color:#CF3D2E;}
+    
+    .icons {border-radius:50%; color:white; margin:0 5px; font-size:20px;cursor:pointer;}
+    .icons:hover {-webkit-transform: scale(1.1) rotate(360deg);
+	-moz-transform: scale(1.1) rotate(360deg);
+	-ms-transform: scale(1.1) rotate(360deg);
+	-o-transform: scale(1.1) rotate(360deg);
+	transform: scale(1.1) rotate(360deg);
+        
+    }
+    
+    strong {
+        padding-left:5px;
+    }
+    
+    h3 {color:lightgrey;
+</style>
+
+<div class="container">
+    <div class="row" style="margin-bottom:40px">
+        <!--header-->
+        <div class="col-md-6">
+                <h1>User Profile</h1>
+        </div>
+        <div class="col-md-6">
+            <div class="pull-right" style="inline">
+                <i class="fa fa-facebook icons"></i>
+                <i class="fa fa-twitter icons"></i>
+                <i class="fa fa-google-plus icons"></i>
+            </div>
+        </div>
+    </div>
+    <hr>
+<div class="row">
+    <!--left column-->
+    <div class="col-md-4 col-sm-4">
+        <img src="<%= user.avatar %>" alt="user profile image">
+        <h2><%= user.firstName  + " " + user.lastName %></h2>
+        <h3><%= user.username %></h3>
+        <hr>
+        <p>Man</p>
+        <p>United States</p>
+        <hr>
+        <div class="form-group">
+            <button class="btn btn-block btn-info">Edit the profile</button>
+        </div>
+    </div>
+    
+    
+    <div class="col-md-8 col-sm-8">
+        <div class="row">
+            <div class="thumbnail">
+                <div class="caption" style="background:#f1f1f1">
+                    <h4>About me</h4>
+                </div>
+                <div class="col-md-3 col-sm-5 col-xs-2 ">
+                    <div style=" margin-left:15%; padding:20px 0">
+                        <strong>Bio</strong>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-7 col-xs-10" style=" padding:20px 0">
+                    <p style="width:95%;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati provident omnis odit magnam eligendi, non impedit error similique est assumenda inventore dignissimos doloremque commodi. Amet, necessitatibus. Doloribus ad neque earum.</p>
+                </div>
+                <div class="row">
+                    </div>
+            </div>
+        </div>
+    </div>
+        
+         <div class="col-md-8 col-sm-8">
+        <% campgrounds.forEach(function(campgrounds){ %>
+         <div class="row" style="padding-top:50px">
+              <div class="thumbnail">
+                    <div class="caption" style="background:#f1f1f1">
+                        <h4>Posts</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-5 col-xs-5">
+                        <div style=" margin-left:15%; padding:20px 0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        <% }) %>
+        </div>
+        
+        <div class="col-md-8 col-sm-8">
+            <div class="row" style="padding-top:50px">
+                <div class="thumbnail">
+                    <div class="caption"  style="background:#f1f1f1">
+                        <h4>Web</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-5 col-xs-5">
+                        <div style=" margin-left:15%; padding:20px 0">
+                            <i class="fa fa-facebook sign"></i><strong>Facebook:</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-sm-7 col-xs-7" style=" padding:20px 0">
+                            <a href="https://www.facebook.com" target="blank">https://www.facebook.com</a>
+                        </div>
+                    </div>
+                    
+                   <div class="row">
+                        <div class="col-md-3 col-sm-5 col-xs-5">
+                        <div style=" margin-left:15%; padding:20px 0">
+                            <i class="fa fa-twitter sign"></i><strong>Twitter:</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-sm-7 col-xs-7" style=" padding:20px 0">
+                            <a href="https://www.twitter.com" target="blank">https://www.twitter.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-3 col-sm-5 col-xs-5">
+                        <div style=" margin-left:15%; padding:20px 0">
+                            <i class="fa fa-google-plus sign"></i><strong>Google+:</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-sm-7 col-xs-7" style=" padding:20px 0">
+                            <a href="https://www.gmail.com" target="blank">https://www.gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+</div>
+</div>
+
+<% include ../partials/footer%>
